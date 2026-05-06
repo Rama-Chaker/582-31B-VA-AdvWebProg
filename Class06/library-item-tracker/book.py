@@ -1,7 +1,4 @@
 class Book:
-    title = "Unknown Title"
-    author = "Unknown Author"
-    available = True
     library_name = "Central Library"
     def __init__(self, title, author,available):
         self.title = title
