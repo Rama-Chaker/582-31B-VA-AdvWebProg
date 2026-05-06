@@ -14,7 +14,10 @@ class Book:
     @classmethod
     def change_library_name(cls, new_name):
         cls.library_name = new_name
-
+    @classmethod
+    def from_string(cls, data):
+        title, author, available = data.split(", ")
+        return cls(title.strip(), author.strip(), available.strip().lower() == "true")
     @staticmethod
     def is_valid_title(title):
         if len(title) > 0:
