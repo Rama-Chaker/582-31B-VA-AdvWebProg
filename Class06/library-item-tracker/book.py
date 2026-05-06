@@ -35,4 +35,4 @@ class Book:
             print(f"'{self.title}' was not borrowed.")
 
     def display_info(self):
-        print(f"Title: {self.title}, Author: {self.author}, Available: {self.available}")
+        print(f"The Title of the book is :  {self.title} for the author: {self.author}, and it's availability is : {self.available}")
