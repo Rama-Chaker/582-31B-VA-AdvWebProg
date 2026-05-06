@@ -1,11 +1,12 @@
 class Book:
     library_name = "Central Library"
     count = 0
-
-    def __init__(self, title, author, available):
+    
+    def __init__(self, title, author, available, genre):
         self.title = title
         self.author = author
         self.available = available
+        self.genre = genre
         Book.count += 1
 
     @classmethod
@@ -16,8 +17,8 @@ class Book:
         cls.library_name = new_name
     @classmethod
     def from_string(cls, data):
-        title, author, available = data.split(", ")
-        return cls(title.strip(), author.strip(), available.strip().lower() == "true")
+        title, author, available , genre = data.split(", ")
+        return cls(title.strip(), author.strip(), available.strip().lower() == "true", genre.strip())
     @staticmethod
     def is_valid_title(title):
         if len(title) > 0:
@@ -46,4 +47,5 @@ class Book:
                 Title: {self.title}
                 Author: {self.author}
                 Available: {'In Stock' if self.available else 'Out of Stock'}
+                Genre: {self.genre}
                 """)
