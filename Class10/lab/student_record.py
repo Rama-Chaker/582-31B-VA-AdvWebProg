@@ -4,8 +4,8 @@ class StudentRecord:
             print("Invalid input for student record")
         else:
             self.name = name
-        self.__gpa = gpa
-        self.__credits = credits
+        self.gpa = gpa
+        self.credits = credits
 
     @property
     def gpa(self):
