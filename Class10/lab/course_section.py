@@ -1,7 +1,7 @@
 class CourseSection:
     def __init__(self, title, capacity, enrolled):
         if title == "":
-            print("Invalid input for course section")
+            raise ValueError("Invalid input for course section")
         self.title = title
         self.capacity = capacity
         self.enrolled = enrolled
@@ -12,10 +12,11 @@ class CourseSection:
 
     @capacity.setter
     def capacity(self, value):
-        if value > 0:
-            self.__capacity = value
+        if value <= 0:
+            raise ValueError("Capacity cannot be zero or negative")
+
         else:
-            print("Capacity cannot be zero or negative")
+            self.__capacity = value
 
     @property
     def enrolled(self):
@@ -23,20 +24,22 @@ class CourseSection:
 
     @enrolled.setter
     def enrolled(self, value):
-        if value >= 0 and value <= self.__capacity:
-            self.__enrolled = value
+        if value < 0:
+            raise ValueError("Enrolled cannot be negative")
+            if value > self.__capacity:
+                raise ValueError("Enrolled cannot exceed capacity")
         else:
-            print("Invalid enrollment number")
+            self.__enrolled = value
 
     def register_students(self):
-        if self.__enrolled < self.__capacity:
+        if self.__enrolled < self.capacity:
             self.__enrolled += 1
 
     def drop_students(self):
         if self.__enrolled > 0:
             self.__enrolled -= 1
         else:
-            print("Cannot drop students, no students enrolled")
+            raise ValueError("Cannot drop students, no students enrolled")
 
     def display_info(self):
         print(
