@@ -13,7 +13,7 @@ class Customer(User):
         super().display_info()
         print(f"Customer ID: {self.__customer_id}")
 
-class Admin(User):
+class Staff(User):
     def __init__(self, name, email, employee_id):
         super().__init__(name, email)
         self.__employee_id = employee_id
