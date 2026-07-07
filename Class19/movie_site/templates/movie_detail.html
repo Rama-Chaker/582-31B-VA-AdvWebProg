@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a> | 
+      <a href="/about">About</a> | 
+      <a href="/movies">Movies</a>
+    </nav>
+    <hr>
+    <h2>This is {{ title }}</h2>
+
+    {% if movie %}
+      <h3>Title: {{ movie.title }}</h3>
+      <p>Year released: {{ movie.year }}</p>
+      <p>Genre: {{ movie.genre }}</p>
+    {% else %}
+      <p>Could not find the movie: "{{ search_title }}"</p>
+    {% endif %}
+
+    <br>
+    <a href="/movies">Back to Movies List</a>
+  </body>
+</html>

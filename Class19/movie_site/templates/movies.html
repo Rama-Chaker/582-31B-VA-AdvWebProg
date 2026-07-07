@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a> | 
+      <a href="/about">About</a> | 
+      <a href="/movies">Movies</a>
+    </nav>
+    <hr>
+    <h2>This is {{ title }}</h2>
+
+    <form action="/movies" method="GET">
+      <input type="text" name="genre" value="{{ genre }}" placeholder="Enter genre (e.g. Sci-Fi)">
+      <button type="submit">Search Genre</button>
+    </form>
+    <br>
+
+    <h3>All Movies:</h3>
+    <ul>
+      {% for movie in movies %}
+        <li>
+          <a href="/movie?title={{ movie.title }}">{{ movie.title }}</a> 
+          ({{ movie.year }})
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
