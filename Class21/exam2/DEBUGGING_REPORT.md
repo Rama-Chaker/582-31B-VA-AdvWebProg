@@ -65,6 +65,16 @@ def in_stock(self):
 **Test:**
 Logically, an item is in stock when teh stock is > 0
 
+## Conditional Issue for in stock function
+**File: app.py**
+**Problem:**
+def __repr__(self):
+        return self.id
+**Fix:**
+ return f"<Album {self.title}>"
+**Test:**
+repr returns string rather than int
+
 ## Application Context
 **File: app.py**
 **Problem:**
@@ -115,6 +125,30 @@ Logically, query.all() is a function so it needs a "()"
 **Test:**
 Inside the function add album, we are using method POST so that's why I added  "POST" in app.route.
 
+## Form Value Error
+**File: app.py**
+**Problem:**
+ album = Album(
+            title=request.form["album_name"],
+            artist=request.form["artist"],
+            genre=request.form["genre"],
+            year=request.form["year"],
+            stock=request.form["stock"]
+        )
+**Fix:**
+ album = Album(
+            title=request.form["title"],
+            artist=request.form["artist"],
+            genre=request.form["genre"],
+            year=int(request.form["year"]),
+            stock=int(request.form["stock"])
+        )
+**Test:**
+In add album template : <input type="text" id="title" name="title" required>
+
+so in order to meet the requirements of the form for the title we need to change from album name to title.
+And also we are using int for both stiock and yer in the db , so we have to cast it to int.
+
 ## Session.add() missing
 **File: app.py**
 **Problem:**
@@ -122,6 +156,7 @@ Was missing the add(album) session before the commit
 **Fix:**
 db.session.add(album)
 **Test:**
+it is like a create function so it needs to be ther ein order to be able to add the album
 
 ## Redirecting issue
 **File: app.py**
@@ -134,7 +169,7 @@ return redirect(
             url_for("index")
         )
 **Test:**
-"albums" route doesnn't exist
+"albums" route doesn't exist
 
 ## Form value
 **File: app.py**
@@ -159,6 +194,15 @@ return render_template(
     )
 **Test:**
 Used the edit template since it exists.
+
+## Session.commit() missing in edit
+**File: app.py**
+**Problem:**
+Was missing the commit session
+**Fix:**
+db.session.commit()
+**Test:**
+we need to save changes, otherwise the changes weren't saved.
 
 ## Delete route issue
 **File: app.py**

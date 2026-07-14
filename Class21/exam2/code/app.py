@@ -53,7 +53,7 @@ class Album(db.Model):
         return self.stock > 0
 
     def __repr__(self):
-        return self.id
+         return f"<Album {self.title}>"
 
 
 with app.app_context():
@@ -73,7 +73,7 @@ def index():
 
     return render_template(
         "index.html",
-        album=albums,
+        albums=albums,
         selected_genre=genre
     )
 
@@ -85,11 +85,11 @@ def index():
 def add_album():
     if request.method == "POST":
         album = Album(
-            title=request.form["album_name"],
+            title=request.form["title"],
             artist=request.form["artist"],
             genre=request.form["genre"],
-            year=request.form["year"],
-            stock=request.form["stock"]
+            year=int(request.form["year"]),
+            stock=int(request.form["stock"])
         )
 
         db.session.add(album)
@@ -115,9 +115,10 @@ def edit_album(album_id):
         album.title = request.form["title"]
         album.artist = request.form["artist"]
         album.genre = request.form["genre"]
-        album.year = request.form["year"]
-        album.stock = request.form["stock"]
+        album.year = int(request.form["year"])
+        album.stock = int(request.form["stock"])    
 
+        db.session.commit()
         return redirect(
             url_for(
                 "edit_album",
