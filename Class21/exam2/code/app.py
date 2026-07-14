@@ -62,14 +62,14 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    genre = request.args.get("category", "")
+    genre = request.args.get("genre", "")
 
     if genre:
         albums = Album.query.filter_by(
-            artist=genre
+            genre=genre
         ).all()
     else:
-        albums = Album.query.all
+        albums = Album.query.all()
 
     return render_template(
         "index.html",
@@ -80,7 +80,7 @@ def index():
 
 @app.route(
     "/albums/add",
-    methods=["GET"]
+    methods=["GET", "POST"]
 )
 def add_album():
     if request.method == "POST":
@@ -96,7 +96,7 @@ def add_album():
         db.session.commit()
 
         return redirect(
-            url_for("albums")
+            url_for("index")
         )
 
     return render_template(
@@ -116,7 +116,7 @@ def edit_album(album_id):
         album.artist = request.form["artist"]
         album.genre = request.form["genre"]
         album.year = request.form["year"]
-        album.stock = request.form["amount"]
+        album.stock = request.form["stock"]
 
         return redirect(
             url_for(
@@ -126,7 +126,7 @@ def edit_album(album_id):
         )
 
     return render_template(
-        "add_album.html",
+        "edit_album.html",
         album=album
     )
 
@@ -139,7 +139,7 @@ def delete_album(album_id):
     album = Album.query.get_or_404(album_id)
 
     db.session.delete(album)
-
+    db.session.commit()
     return redirect(
         url_for("index")
     )
