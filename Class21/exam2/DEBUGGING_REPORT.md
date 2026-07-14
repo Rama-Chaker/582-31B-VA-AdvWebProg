@@ -76,3 +76,110 @@ with app.app_context():
     with app.app_context:
 
 When fixed, app started (ran)
+
+## Incorrect Query Parameter & Filter Column
+**File: app.py**
+**Problem:**
+genre = request.args.get("category", "")
+ albums = Album.query.filter_by(
+            artist=genre
+        ).all()
+**Fix:**
+genre = request.args.get("genre", "")
+albums = Album.query.filter_by(
+            genre=genre
+        ).all()
+**Test:**
+
+## Missing Execution Parentheses on Query
+**File: app.py**
+**Problem:**
+albums = Album.query.all
+**Fix:**
+albums = Album.query.all()
+**Test:**
+Logically, query.all() is a function so it needs a "()"
+
+## HTTP Methods
+**File: app.py**
+**Problem:**
+@app.route(
+    "/albums/add",
+    methods=["GET"]
+)
+**Fix:**
+@app.route(
+    "/albums/add",
+    methods=["GET", "POST"]
+)
+**Test:**
+Inside the function add album, we are using method POST so that's why I added  "POST" in app.route.
+
+## Session.add() missing
+**File: app.py**
+**Problem:**
+Was missing the add(album) session before the commit
+**Fix:**
+db.session.add(album)
+**Test:**
+
+## Redirecting issue
+**File: app.py**
+**Problem:**
+return redirect(
+            url_for("albums")
+        )
+**Fix:**
+return redirect(
+            url_for("index")
+        )
+**Test:**
+"albums" route doesnn't exist
+
+## Form value
+**File: app.py**
+**Problem:**
+album.stock = request.form["amount"]
+**Fix:**
+album.stock = request.form["stock"]
+**Test:**
+The form has "stock" attribute not amount
+
+## Rendering template issue for editing an album
+**File: app.py**
+**Problem:**
+return render_template(
+        "add_album.html",
+        album=album
+    )
+**Fix:**
+return render_template(
+        "edit_album.html",
+        album=album
+    )
+**Test:**
+Used the edit template since it exists.
+
+## Delete route issue
+**File: app.py**
+**Problem:**
+@app.route(
+    "/albums/<int:album_id>/delete",
+    methods=["GET"]
+)
+**Fix:**
+@app.route(
+    "/albums/<int:album_id>/delete",
+    methods=["POST"]
+)
+**Test:**
+A delete should be done via POST method
+
+## Conditional Issue for in stock function
+**File: app.py**
+**Problem:**
+Missing commit session after the delete
+**Fix:**
+db.session.commit()
+**Test:**
+A commit is like a save method, so the chnages done cna be saved to the db
