@@ -121,8 +121,7 @@ def edit_album(album_id):
         db.session.commit()
         return redirect(
             url_for(
-                "edit_album",
-                id=album.id
+                "index"
             )
         )
 
