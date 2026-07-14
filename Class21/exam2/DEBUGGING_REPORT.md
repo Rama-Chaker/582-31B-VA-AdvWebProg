@@ -183,3 +183,16 @@ Missing commit session after the delete
 db.session.commit()
 **Test:**
 A commit is like a save method, so the chnages done cna be saved to the db
+
+## Template issue (Base Template)
+**File: base.html**
+**Problem:**
+ <a href="{{ url_for('albums') }}"> All Albums </a>
+<a href="{{ url_for('add') }}"> Add Album </a>
+
+**Fix:**
+ <a href="{{ url_for('index') }}"> All Albums </a>
+<a href="{{ url_for('add_album') }}"> Add Album </a>
+
+**Test:**
+url_for() function in Flask doesn't look at URLs; it looks at the name of Python functions inside app.py.
