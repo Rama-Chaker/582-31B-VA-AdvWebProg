@@ -49,10 +49,10 @@ def validate_password(password):
     return None
 
 
-#### Home route
+#### Base route
 @app.route("/")
-def home():
-    return render_template("home.html")
+def base():
+    return render_template("base.html")
 
 
 #### Registration route
@@ -138,7 +138,7 @@ def login():
 def logout():
     logout_user()
     flash("You have been logged out.", "success")
-    return redirect(url_for("home"))
+    return redirect(url_for("base"))
 
 
 #### View Reading List / Books
